@@ -65,7 +65,7 @@ module top(
    .const_flag,
 	 .do_a(in_a),
 	 .do_b(in_b),
-   .store_val
+   .store_value(store_val)
   );
 
   dmem dm1(
