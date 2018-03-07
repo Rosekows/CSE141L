@@ -1,7 +1,7 @@
 // Master Testbench -- runs all three programs in succession
 module top_tb();
   logic       clk, 					    // to DUT
-              reset = 1;
+              reset;
   wire        done;					    // from DUT
   logic[15:0] p;
   top pa1(.*);							
@@ -11,7 +11,7 @@ module top_tb();
   logic signed[8:0] dist1,	            // program 3 distances
                     dist2;
   logic       [7:0] ct3;				
-  int  seed  = 23;			            // change to vary "random" operands
+  int seed = 23;			            // change to vary "random" operands
 
 
 
@@ -30,7 +30,8 @@ module top_tb();
     $display(); 
 	$display(" %d*%d*%d",a,b,c);
 	p = a*b*c;
-	#20ns reset = 0;					// let PC change from 0 and program begin (ADD START FLAG HERE)
+	#10ns reset = 1;					// reset #1 -- PRODUCT
+	#20ns reset = 0;					// start program
     wait(done);		
 
 // diagnostics: compare a*b*c against what the DUT computes 
@@ -65,8 +66,8 @@ module top_tb();
 //           $display("bench",,,ct,,,i);     					(REMOVE THIS) 
 	     end
 	end	   :op_ld_loop
-    #10ns reset = 1;					// CHANGE THIS TO A START FLAG??
-	#20ns reset = 0;					
+    #10ns reset = 1;					// reset #2 -- STRING MATCH
+	#20ns reset = 0;					// start program
 	wait(done);
 
 // diagnostics: compare ct against what the DUT computes 
@@ -102,8 +103,8 @@ module top_tb();
 		end
 		// $display("bench",,,ct,,,i);      
 	  end
-	#10ns reset = 1;					// CHANGE THIS TO A START FLAG??
-    #20ns reset = 0;
+	#10ns reset = 1;					// reset #3 -- CLOSEST PAIR
+    #20ns reset = 0;					// start program
 	wait(done);
 
 // diagnostics: compare dist against what the DUT computes 
