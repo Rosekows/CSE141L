@@ -6,26 +6,22 @@ module top(
 
   wire[19:0] inst;
   wire[8:0] iptr;
-  wire[7:0] PC, 
- 
-            
+  wire[7:0] PC,     
 			dm_out,
-            dm_in,
-				dm_addr,
+      dm_in,
+			dm_addr,
 			rf_di,
 			in_a,
-            do_a,
-            in_b,
-			do_b,
+      in_b,
 			rslt,
       store_in;
   wire[14:0] bamt;
   wire[4:0] op;	
   wire[1:0] ptr_a,
             ptr_b,
-			ptr_w;
+			      ptr_w;
   wire      z;
-  wire 		co;
+  wire 		  co;
   wire      lt; 
 
   assign  op = inst[19:15];
@@ -62,8 +58,8 @@ module top(
 	.ptr_w()   ,
 	.ptr_a()   ,
 	.ptr_b()   ,
-	.do_a     ,
-	.do_b,
+	.do_a(in_a),
+	.do_b(in_b),
   .store_in
   );
 
