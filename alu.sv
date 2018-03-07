@@ -24,7 +24,7 @@ module alu (
     kCMP: {z, lt} = {in_a == in_b, in_a < in_b};
     //kCMP: z = in_a == in_b,
     // 		 lt = in_a < in_b;
-    kBE:  rslt = in_a;        // branching doesn't use ALU
+    kBE:  rslt = in_b;        // branching doesn't use ALU
     kBL:  rslt = in_b;        // branching doesn't use ALU
     kBG:  rslt = in_b;        // branching doesn't use ALU
     kBA:  rslt = in_b;        // branching doesn't use ALU
