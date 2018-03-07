@@ -1,10 +1,10 @@
 module rf(
-  input             clk,
-  input  [7:0]      di,
-  input             we,
-  input  [4:0]      ptr_w,
-                    ptr_a,
-			              ptr_b,
+  input           clk,
+  input[7:0]      di,
+  input           we,
+  input[4:0]      ptr_w,
+                  ptr_a,
+	input[7:0] 		  ptr_b,
   input       r_overflow,
   input				const_flag,
   
@@ -27,7 +27,7 @@ module rf(
     else if (ptr_b == 0)
       do_b = 0;
     else
-      do_b = core[ptr_b];
+      do_b = core[ptr_b[4:0]];      // TODO: not sure about syntax, need last 5 bits
     store_value = core[ptr_w];
     core[8] = r_overflow;
   end

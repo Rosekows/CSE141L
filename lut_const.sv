@@ -22,8 +22,8 @@ module lut_const(
       5'b11110: constant = 8'b0001_0011; // 19
       5'b11111: constant = 8'b0001_0100; // 20  
     endcase
-    if (ptr < 5b'10000) begin    // if ptr doesn't start with 1 pass it through
-      constant = ptr;            // since it's a ptr to a register, not constant
+    if (ptr < 5b'10000) begin            // if ptr doesn't start with 1 pass it through
+      constant = {3'b000, ptr};          // since it's a ptr to a register, not constant   
       const_flag = 0;
     end
     else 
