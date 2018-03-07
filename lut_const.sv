@@ -4,7 +4,8 @@ module lut_const(
   output logic const_flag);
 
   always_comb begin            // TODO: not sure about syntax
-    case(ptr)
+    constant = 8'b0;
+	 case(ptr)
       5'b10000: constant = 8'b0111_1111; // 127
       5'b10001: constant = 8'b0000_0001; // 1
       5'b10010: constant = 8'b0000_0010; // 2
@@ -22,11 +23,10 @@ module lut_const(
       5'b11110: constant = 8'b0001_0011; // 19
       5'b11111: constant = 8'b0001_0100; // 20  
     endcase
-    if (ptr < 5b'10000) begin            // if ptr doesn't start with 1 pass it through
+    if (ptr < 5'b10000) begin            // if ptr doesn't start with 1 pass it through
       constant = {3'b000, ptr};          // since it's a ptr to a register, not constant   
       const_flag = 0;
     end
-    else 
-      const_flag = 1;
+    else const_flag = 1;
   end
 endmodule

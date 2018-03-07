@@ -29,5 +29,5 @@ module pc (
 	    PC <= PC + bamt;
     else 
 	    PC <= PC + 'b1;
-
+    end
 endmodule

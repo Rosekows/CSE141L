@@ -12,7 +12,7 @@ module rf(
                     do_b,
                     store_value);
 
-  logic  [7:0] core[4];
+  logic  [7:0] core[9];
 
   always_comb begin 
     if (we)   //always_ff @(posedge clk) if(we) <- we think this is wrong
