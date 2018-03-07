@@ -17,5 +17,6 @@ module rf(
 
   always_comb do_a = core[ptr_a];
   always_comb do_b = core[ptr_b];
+  always_comb store_in = core[ptr_w];
 
 endmodule
