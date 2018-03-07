@@ -14,10 +14,9 @@ module rf(
 
   logic  [7:0] core[4];
 
-  always_ff @(posedge clk) if(we)
-	  core[ptr_w] <= di;
-
-  always_comb begin        
+  always_comb begin 
+    if (we)   //always_ff @(posedge clk) if(we) <- we think this is wrong
+      core[ptr_w] <= di;       
     if (ptr_a == 0)           // if one of the pointers == 0, always output 0
       do_a = 0;
     else
