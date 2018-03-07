@@ -9,7 +9,7 @@ module rf(
   input				const_flag,
   
   output logic[7:0] do_a,
-                    do_b
+                    do_b,
                     store_value);
 
   logic  [7:0] core[4];
