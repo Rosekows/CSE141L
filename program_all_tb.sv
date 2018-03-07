@@ -4,7 +4,7 @@ module top_tb();
               reset = 1;
   wire        done;					    // from DUT
   logic[15:0] p;
-  program_all pa1(.*);					// personalize to your design
+  top pa1(.*);							
   logic[7:0]  a, b, c;                  // program 1 mpy operands
   logic[7:0] dat_ram[256];
   bit[7:0]   ct;						// program 2 where's Waldo count 
@@ -12,7 +12,6 @@ module top_tb();
                     dist2;
   logic       [7:0] ct3;				
   int  seed  = 23;			            // change to vary "random" operands
-//  logic[7:0] test;
 
 
 
@@ -21,9 +20,9 @@ module top_tb();
     a               =  5;
 	b               = 15;
 	c               =  2;
-	pa1.data_ram_all[1] =  a;           // initialize DUT data memory
-	pa1.data_ram_all[2] =  b;		    
-	pa1.data_ram_all[3] =  c;	
+	pa1.dmem.guts[1] =  a;           	// initialize DUT data memory
+	pa1.dmem.guts[2] =  b;		    
+	pa1.dmem.guts[3] =  c;	
 
 // compute what the product should be
 // under Verilog rules, only the lower 16 bits will be retained
@@ -36,12 +35,11 @@ module top_tb();
 
 // diagnostics: compare a*b*c against what the DUT computes 
     $display();
-	$display ("math prod = %d; DUT prod = %d", p, {pa1.top.dmem.guts[4], pa1.top.dmem.guts[5]});
-	if(p=={pa1.top.dmem.guts[4], pa1.top.dmem.guts[5]}) $display("program 1 success");
+	$display ("math prod = %d; DUT prod = %d", p, {pa1.dmem.guts[4], pa1.dmem.guts[5]});
+	if(p=={pa1.dmem.guts[4], pa1.dmem.guts[5]}) $display("program 1 success");
 	else $display("program 1 failure");
-//    $displayh("prod=0x%h 0x%h",p,{pa1.top.dmem.guts[4],pa1.top.dmem.guts[5]});
+//    $displayh("prod=0x%h 0x%h",p,{pa1.dmem.guts[4],pa1.dmem.guts[5]});
 //    $display();
-//    $display("cycle_count = %d",pa1.pr1.cycle_ct);				(REMOVE THIS)
     $display("\n \n");
 
 
@@ -50,13 +48,13 @@ module top_tb();
 	$display("program 2 -- pattern search");
     $display();
     #10ns;    
-	pa1.data_ram_all[6] = 4'b1101;     // Waldo himself :)
-    $display("pattern = %b", pa1.data_ram_all[6][3:0]);
+	pa1.dmem.guts[6] = 4'b1101;     // Waldo himself :)
+    $display("pattern = %b", pa1.dmem.guts[6][3:0]);
     $display();
-	dat_ram[6] = pa1.data_ram_all[6];
+	dat_ram[6] = pa1.dmem.guts[6];
 	for(int i=32; i<96; i++) begin  :op_ld_loop
-	  pa1.data_ram_all[i] = $random;
-	  dat_ram[i] = pa1.data_ram_all[i];
+	  pa1.dmem.guts[i] = $random;
+	  dat_ram[i] = pa1.dmem.guts[i];
       if(dat_ram[i][3:0]==dat_ram[6] ||
          dat_ram[i][4:1]==dat_ram[6] ||
          dat_ram[i][5:2]==dat_ram[6] ||
@@ -72,8 +70,8 @@ module top_tb();
 	wait(done);
 
 // diagnostics: compare ct against what the DUT computes 
-	$display("math match count = %d; DUT count = %d", ct, pa1.top.dmem.guts[7]);
-	if(ct==pa1.top.dmem.guts[7]) $display("program 2 success");
+	$display("math match count = %d; DUT count = %d", ct, pa1.dmem.guts[7]);
+	if(ct==pa1.dmem.guts[7]) $display("program 2 success");
 	else $display("program 2 failure");
     $display("\n \n");
 
@@ -85,11 +83,9 @@ module top_tb();
     dist1 = 0;
     dist2 = 255;
     ct3 = 0;
-//	test   = $random(seed);
-//	$display("test = %d",test);
    	for(int i=128;i<148;i++) begin
 	  dat_ram[i] = $random(seed);           		// feel free to vary seed
-	  pa1.data_ram_all[i] =  dat_ram[i];
+	  pa1.dmem.guts[i] =  dat_ram[i];
 //	  $display(i,,dat_ram[i]);
 	end
 
@@ -111,8 +107,8 @@ module top_tb();
 	wait(done);
 
 // diagnostics: compare dist against what the DUT computes 
-	#20ns $display("math dist = %d, DUT dist = %d", dist2, pa1.top.dmem.guts[127]);
-    if(dist2==pa1.top.dmem.guts[127]) $display("program 3 success");
+	#20ns $display("math dist = %d, DUT dist = %d", dist2, pa1.dmem.guts[127]);
+    if(dist2==pa1.dmem.guts[127]) $display("program 3 success");
 	else $display("program 3 failure");
 	$display("\n \n");
     #10ns;
