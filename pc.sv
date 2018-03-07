@@ -32,11 +32,12 @@ module pc (
   always_ff @(posedge clk) 
     if (reset)
       PC <= 0;
-    else if (brel)
+    else if (brel) begin
 	  // if (brel && !reset)          // only increment if reset is not on TODO: this is a little sketchy...
 	    PC <= PC + bamt;
-    else 
+    end
+	 else begin 
 	  // else if (!reset)
 	    PC <= PC + 'b1;
-
+    end
 endmodule
