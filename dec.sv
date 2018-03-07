@@ -6,7 +6,6 @@ module dec(
   output logic[4:0] rs,
   output logic[4:0] rd,
   output logic[4:0] rt,
-  output logic const_flag,
   
   // J-types
   output logic[14:0] bamt,
@@ -19,7 +18,6 @@ module dec(
      rs = 5'b0;
 	  rd = 5'b0;
 	  rt = 5'b0;
-	  const_flag = 1'b0;
 	  bamt = 15'b0;
 	  we_rf = 1'b0;
 	  we_dmem = 1'b0;
@@ -29,7 +27,6 @@ module dec(
 	    rd = inst[14:10];
 	  	rs = inst[9:5];
 	  	rt = inst[4:0];
-	  	const_flag = inst[4];
 	  	we_rf = 1;
 	  	we_dmem = 0;
 	  end
@@ -39,7 +36,6 @@ module dec(
 	  	rd = inst[14:10];
 	  	rt = inst[9:5];
 	  	rs = inst[4:0];
-	  	const_flag = 1;
 	  	we_rf = 0;
 	  	we_dmem = 0;
 	  end
@@ -48,7 +44,6 @@ module dec(
 	  else if (op == 13) begin
 	  	rs = inst[14:10];
 	  	rd = inst[9:5];
-	  	const_flag = 1;
 	  	we_rf = 0;
 	  	we_dmem = 1;
 	  end

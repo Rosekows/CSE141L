@@ -4,75 +4,80 @@ module top(
                reset,
   output logic done);
 
-  wire[19:0] inst;
-  wire[8:0] iptr;
-  wire[7:0] PC,     
-			dm_out,
-      dm_in,
-			dm_addr,
-			rf_di,
-			in_a,
-      in_b,
-			rslt,
-      store_in;
-  wire[14:0] bamt;
-  wire[4:0] op;	
-  wire[1:0] ptr_a,
-            ptr_b,
-			      ptr_w;
-  wire      z;
-  wire 		  co;
-  wire      lt; 
+  wire[19:0] inst;  //lut_instr->dec
+  wire[8:0] iptr;   //imem->lut_instr
+  wire[7:0] PC,     //pc->imem 
+			dm_out,       //dmem->rf_mux
+			rf_di,        //rf_mux->rf
+			in_a,         //rf->alu
+      in_b,         //rf->alu
+			rslt,         //alu->dmem, alu->rf_mux
+      store_val,    //rf->dmem
+      ptr_b;        //lut_const->rf
+  wire[14:0] bamt;  //dec->pc
+  wire[4:0] op;	    //????????
+  wire[4:0] ptr_a,  //dec->rf
+            rt,     //dec->lut_const
+			      ptr_w;  //dec->rf
+  wire      z;      //alu->pc
+  wire 		  co;     //alu->rf
+  wire      lt;     //alu->pc
+  wire      we_rf;  //dec->rf
+  wire      we_dmem;  //dec->dmem
+  wire      const_flag;   //lut_const->rf
 
   assign  op = inst[19:15];
   assign  done = iptr==9'b000_000_000;
   
-  alu au1(
-	.op ,
-	.in_a ,
-	.in_b ,
-	.rslt ,
-	.co ,
-	.lt ,
-	.z  
+  alu alu1(
+	 .op, 
+	 .in_a,
+	 .in_b,
+	 .rslt,
+	 .co,
+	 .lt,
+	 .z  
   );
   
   pc pc1(
-    .clk,
-	.reset, 
-	.op   ,
-	.bamt ,
-	.z    ,
-	.lt   ,
-	.PC );
+   .clk,
+	 .reset, 
+	 .op,
+	 .bamt,
+	 .z,
+	 .lt,
+	 .PC 
+  );
 
   imem im1(
-     .PC   ,
-	 .iptr
+     .PC,
+	   .iptr
   );
   
   rf rf1(
-    .clk       ,
-	.di (rf_di), // data output from either dmem or alu
-	.we   (),
-	.ptr_w()   ,
-	.ptr_a()   ,
-	.ptr_b()   ,
-	.do_a(in_a),
-	.do_b(in_b),
-  .store_in
+   .clk,
+	 .di(rf_di),   
+	 .we(we_rf),
+	 .ptr_w,
+	 .ptr_a,
+	 .ptr_b,
+   .r_overflow(co),
+   .const_flag,
+	 .do_a(in_a),
+	 .do_b(in_b),
+   .store_val
   );
 
   dmem dm1(
-    .clk         ,
-	.we  ()   ,
-	.addr(dm_addr),
-	.di  (store_in) ,
-	.dout(dm_out)
+   .clk,
+	 .we(we_dmem),
+	 .addr(rslt),
+	 .di(store_val),
+	 .dout(dm_out)
   );
   
   lut_instr luti (
-  	.iptr 	,
+  	.iptr,
   	.inst
   );
   
@@ -80,11 +85,11 @@ module top(
      .op,
      .inst,
      .rs(ptr_a),
-     .rt(ptr_b),
-     .rd(),
-     .const_flag(),
-     .we_rf(),
-     .we_dmem()
+     .rt,
+     .rd(ptr_w),
+     .bamt, 
+     .we_rf,
+     .we_dmem
   );
 
   rf_mux rf_mux1 (
@@ -92,6 +97,12 @@ module top(
     .dmem_out(dm_out),
     .alu_result(rslt), 
     .rf_din(rf_di)
+  );
+
+  lut_const lut_const1 (
+    .ptr(rt),
+    .constant(ptr_b),
+    .const_flag
   );
 
 endmodule
