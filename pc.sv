@@ -20,13 +20,15 @@ module pc (
 
   always_ff @(posedge clk) 
     if (reset && state == 0)        
-      PC <= 0;                      // START OF PRODUCT
+      PC <= 0;
+      $display("program 1");                     // START OF PRODUCT
     else if (reset && state == 1)
       PC <= 25;                     // START OF STRING MATCH
     else if (reset)
       PC <= 44;                     // START OF CLOSEST PAIR
     else if (brel)
 	    PC <= PC + bamt;
+      $display("running");
     else 
 	    PC <= PC + 'b1;
     end
