@@ -8,7 +8,7 @@ module top(
   wire[8:0] iptr;   //imem->lut_instr
   wire[7:0] PC,     //pc->imem 
 			dm_out,       //dmem->rf_mux
-			rf_di,        //rf_mux->rf
+//	  rf_di,        //rf_mux->rf
 			in_a,         //rf->alu
       in_b,         //rf->alu
 			rslt,         //alu->dmem, alu->rf_mux
@@ -54,6 +54,9 @@ module top(
 	   .iptr
   );
   
+  assign load_instr = op == 12;
+  assign rf_di = load_instr ? dm_out : rslt;
+
   rf rf1(
    .clk,
 	 .di(rf_di),   
@@ -92,12 +95,12 @@ module top(
      .we_dmem
   );
 
-  rf_mux rf_mux1 (
-    .op,
-    .dmem_out(dm_out),
-    .alu_result(rslt), 
-    .rf_din(rf_di)
-  );
+//  rf_mux rf_mux1 (
+//    .op,
+//    .dmem_out(dm_out),
+//    .alu_result(rslt), 
+//    .rf_din(rf_di)
+//  );
 
   lut_const lut_const1 (
     .ptr(rt),
