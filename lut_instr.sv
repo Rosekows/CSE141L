@@ -69,6 +69,6 @@ module lut_instr(
     9'b000_111_010: inst = 20'b01000_11111_11111_10000; // bl	outer
     9'b000_111_011: inst = 20'b01101_00001_10000_00000; // st	r1, [127]
   
-	 default: inst = 20'b0;
+	 default: inst = 20'b0; //TODO: also seems sketch, no changes until theories are proven
   endcase
 endmodule
