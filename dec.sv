@@ -25,8 +25,8 @@ module dec(
 	  // R - type
 	  if (op < 7 || op == 11) begin
 	    rd = inst[14:10];
-	  	rs = inst[9:5];
-	  	rt = inst[4:0];
+	  	rt = inst[9:5];
+	  	rs = inst[4:0];
 	  	we_rf = 1;
 	  	we_dmem = 0;
 	  end
@@ -36,14 +36,14 @@ module dec(
 	  	rd = inst[14:10];
 	  	rt = inst[9:5];
 	  	rs = inst[4:0];
-	  	we_rf = 0;
+	  	we_rf = 1;
 	  	we_dmem = 0;
 	  end
 	  
 	  // I - type: store
 	  else if (op == 13) begin
-	  	rs = inst[14:10];
-	  	rd = inst[9:5];
+	  	rd = inst[14:10]; 
+	  	rt = inst[9:5]; // used to be rs
 	  	we_rf = 0;
 	  	we_dmem = 1;
 	  end
@@ -54,5 +54,10 @@ module dec(
 	  	we_rf = 0;
 	  	we_dmem = 0;
 	  end
+	  
+	  $display("rd is %d", rd);
+	  $display("rs is %d", rs);
+	  $display("rt is %d", rt);
+	  $display("we_rf is %d\n", we_rf);
    end
 endmodule

@@ -8,7 +8,7 @@ module top(
   wire[8:0] iptr;   //imem->lut_instr
   wire[7:0] PC,     //pc->imem 
 			dm_out,       //dmem->rf_mux
-//	  rf_di,        //rf_mux->rf
+	  		rf_di,        //rf_mux->rf
 			in_a,         //rf->alu
       in_b,         //rf->alu
 			rslt,         //alu->dmem, alu->rf_mux
@@ -36,7 +36,7 @@ module top(
 	 .rslt(rslt),
 	 .co(co),
 	 .lt(lt),
-	 .z  
+	 .z(z)  
   );
   
   pc pc1(
@@ -58,7 +58,7 @@ module top(
   assign rf_di = load_instr ? dm_out : rslt;
 
   rf rf1(
-   .clk,
+     .clk(clk),
 	 .di(rf_di),   
 	 .we(we_rf),
 	 .ptr_w(ptr_w),
@@ -72,7 +72,7 @@ module top(
   );
 
   dmem dm1(
-   .clk,
+   .clk(clk),
 	 .we(we_dmem),
 	 .addr(rslt),
 	 .di(store_val),

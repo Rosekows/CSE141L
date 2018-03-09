@@ -17,23 +17,24 @@ module top_tb();
 
 /* MULTIPLICATION */
   initial begin
-  	force pa1.rf1.core[0] = 0;
-  	force pa1.rf1.core[1] = 0;
-  	force pa1.rf1.core[2] = 0;
- 	force pa1.rf1.core[3] = 0;
-  	force pa1.rf1.core[4] = 0;
-  	force pa1.rf1.core[5] = 0;
-  	force pa1.rf1.core[6] = 0;
-  	force pa1.rf1.core[7] = 0;
+  	pa1.rf1.core[0] = 0;
+  	pa1.rf1.core[1] = 0;
+  	pa1.rf1.core[2] = 0;
+ 	pa1.rf1.core[3] = 0;
+  	pa1.rf1.core[4] = 0;
+  	pa1.rf1.core[5] = 0;
+  	pa1.rf1.core[6] = 0;
+  	pa1.rf1.core[7] = 0;
   	force pa1.rf1.core[8] = 0;
-  	release pa1.rf1.core[0];
+  	
+  	/*release pa1.rf1.core[0];
   	release pa1.rf1.core[1];
   	release pa1.rf1.core[2];
   	release pa1.rf1.core[3];
   	release pa1.rf1.core[4];
   	release pa1.rf1.core[5];
   	release pa1.rf1.core[6];
-  	release pa1.rf1.core[7];
+  	release pa1.rf1.core[7]; */
   	release pa1.rf1.core[8];
   
     a               =  5;
@@ -107,27 +108,28 @@ module top_tb();
 	     end
 	end	   :op_ld_loop
     //#10ns reset = 1;					// reset #2 -- STRING MATCH
-	#20ns reset = 0;					// start program
+	//#20ns reset = 0;					// start program
 	wait(done);
 	#5ns reset = 1;
 	
-	force pa1.rf1.core[0] = 0;
-  	force pa1.rf1.core[1] = 0;
-  	force pa1.rf1.core[2] = 0;
- 	force pa1.rf1.core[3] = 0;
-  	force pa1.rf1.core[4] = 0;
-  	force pa1.rf1.core[5] = 0;
-  	force pa1.rf1.core[6] = 0;
-  	force pa1.rf1.core[7] = 0;
+	pa1.rf1.core[0] = 0;
+  	pa1.rf1.core[1] = 0;
+  	pa1.rf1.core[2] = 0;
+ 	pa1.rf1.core[3] = 0;
+  	pa1.rf1.core[4] = 0;
+  	pa1.rf1.core[5] = 0;
+  	pa1.rf1.core[6] = 0;
+  	pa1.rf1.core[7] = 0;
   	force pa1.rf1.core[8] = 0;
-  	release pa1.rf1.core[0];
+  	
+  	/*release pa1.rf1.core[0];
   	release pa1.rf1.core[1];
   	release pa1.rf1.core[2];
   	release pa1.rf1.core[3];
   	release pa1.rf1.core[4];
   	release pa1.rf1.core[5];
   	release pa1.rf1.core[6];
-  	release pa1.rf1.core[7];
+  	release pa1.rf1.core[7];*/
   	release pa1.rf1.core[8];
 
 // diagnostics: compare ct against what the DUT computes 
@@ -164,7 +166,7 @@ module top_tb();
 		// $display("bench",,,ct,,,i);      
 	  end
 	//#10ns reset = 1;					// reset #3 -- CLOSEST PAIR
-    #20ns reset = 0;					// start program
+    //#20ns reset = 0;					// start program
 	wait(done);
 	#5ns reset = 1;
 

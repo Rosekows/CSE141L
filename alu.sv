@@ -26,8 +26,10 @@ module alu (
     kBA:  rslt = in_b;        // branching doesn't use ALU
     kMOV: rslt = in_a;        // moving doesn't use ALU
     kLD:  rslt = in_a + in_b; // calculate the load address
-    kST:  rslt = in_a;        // store doesn't use ALU
+    kST:  rslt = in_b;        // store doesn't use ALU
+    default: $display("hitting default case!");
 	 endcase
+	 
 	$display("alu bullshit %d", rslt);
   end
 

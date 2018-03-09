@@ -29,6 +29,7 @@ module rf(
       do_b = 0;
     else
       do_b = core[ptr_b[4:0]];    
+    
     store_value = core[ptr_w];
     core[8] = r_overflow;
   end
