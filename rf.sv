@@ -15,8 +15,10 @@ module rf(
   logic  [7:0] core[9];
 
   always_comb begin 
-    if (we)   //always_ff @(posedge clk) if(we) <- we think this is wrong
-      core[ptr_w] <= di;       
+    if (we) begin   //always_ff @(posedge clk) if(we) <- we think this is wrong
+      core[ptr_w] = di;       // CHANGED FROM <=
+      $display("writing %d to %d in rf", di, ptr_w);
+    end
     if (ptr_a == 0)           // if one of the pointers == 0, always output 0
       do_a = 0;
     else
@@ -26,7 +28,7 @@ module rf(
     else if (ptr_b == 0)
       do_b = 0;
     else
-      do_b = core[ptr_b[4:0]];      // TODO: not sure about syntax, need last 5 bits
+      do_b = core[ptr_b[4:0]];    
     store_value = core[ptr_w];
     core[8] = r_overflow;
   end

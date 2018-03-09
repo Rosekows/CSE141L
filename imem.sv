@@ -2,7 +2,6 @@ module imem(
   input       [7:0] PC,
   output logic[8:0] iptr);
   always_comb begin
-   iptr = 'b000_000_000; // default //TODO: uhhh this is the done instruction, seems sketch....
   
    case(PC)
                                  // A * B * C

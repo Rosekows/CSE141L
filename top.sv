@@ -15,7 +15,7 @@ module top(
       store_val,    //rf->dmem
       ptr_b;        //lut_const->rf
   wire[14:0] bamt;  //dec->pc
-  wire[4:0] op;	    //????????
+  wire[4:0] op;	    //like everywhere
   wire[4:0] ptr_a,  //dec->rf
             rt,     //dec->lut_const
 			      ptr_w;  //dec->rf
@@ -30,28 +30,28 @@ module top(
   assign  done = iptr==9'b000_000_000;
   
   alu alu1(
-	 .op, 
-	 .in_a,
-	 .in_b,
-	 .rslt,
-	 .co,
-	 .lt,
+	 .op(op), 
+	 .in_a(in_a),
+	 .in_b(in_b),
+	 .rslt(rslt),
+	 .co(co),
+	 .lt(lt),
 	 .z  
   );
   
   pc pc1(
-   .clk,
-	 .reset, 
-	 .op,
-	 .bamt,
-	 .z,
-	 .lt,
-	 .PC 
+   	 .clk(clk),
+	 .reset(reset), 
+	 .op(op),
+	 .bamt(bamt),
+	 .z(z),
+	 .lt(lt),
+	 .PC(PC) 
   );
 
   imem im1(
-     .PC,
-	   .iptr
+     .PC(PC),
+	 .iptr(iptr)
   );
   
   assign load_instr = op == 12;
@@ -61,11 +61,11 @@ module top(
    .clk,
 	 .di(rf_di),   
 	 .we(we_rf),
-	 .ptr_w,
-	 .ptr_a,
-	 .ptr_b,
+	 .ptr_w(ptr_w),
+	 .ptr_a(ptr_a),
+	 .ptr_b(ptr_b),
    .r_overflow(co),
-   .const_flag,
+   .const_flag(const_flag),
 	 .do_a(in_a),
 	 .do_b(in_b),
    .store_value(store_val)
@@ -80,23 +80,23 @@ module top(
   );
   
   lut_instr luti (
-  	.iptr,
-  	.inst
+  	.iptr(iptr),
+  	.inst(inst)
   );
   
   dec dec1 (
-     .op,
-     .inst,
+     .op(op),
+     .inst(inst),
      .rs(ptr_a),
-     .rt,
+     .rt(rt),
      .rd(ptr_w),
-     .bamt, 
-     .we_rf,
-     .we_dmem
+     .bamt(bamt), 
+     .we_rf(we_rf),
+     .we_dmem(we_dmem)
   );
 
 //  rf_mux rf_mux1 (
-//    .op,
+//    .op(op),
 //    .dmem_out(dm_out),
 //    .alu_result(rslt), 
 //    .rf_din(rf_di)
@@ -105,7 +105,7 @@ module top(
   lut_const lut_const1 (
     .ptr(rt),
     .constant(ptr_b),
-    .const_flag
+    .const_flag(const_flag)
   );
 
 endmodule

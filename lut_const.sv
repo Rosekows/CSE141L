@@ -4,7 +4,6 @@ module lut_const(
   output logic const_flag);
 
   always_comb begin            // TODO: not sure about syntax
-    constant = 8'b0;
 	 case(ptr)
       5'b10000: constant = 8'b0111_1111; // 127
       5'b10001: constant = 8'b0000_0001; // 1

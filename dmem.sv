@@ -8,10 +8,12 @@ module dmem(
   logic[7:0] guts[256];
   always_ff @(posedge clk) if (we) begin
     guts[addr] <= di;
-    $display("wrote %d, to %d", di, addr);
+    //$display("wrote %d, to %d", di, addr);
   end
 
-  always_comb
+  always_comb begin
     dout = guts[addr];
+    $display("dmem bullshit %d", dout);
+  end
 
 endmodule

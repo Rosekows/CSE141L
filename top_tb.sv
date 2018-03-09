@@ -1,10 +1,10 @@
 // Master Testbench -- runs all three programs in succession
 module top_tb();
   logic       clk, 					    // to DUT
-              reset;
+              reset = 1;
   wire        done;					    // from DUT
   logic[15:0] p;
-  top pa1(.*);							
+  top pa1(.reset(reset), .clk(clk), .done(done));							
   logic[7:0]  a, b, c;                  // program 1 mpy operands
   logic[7:0] dat_ram[256];
   bit[7:0]   ct;						// program 2 where's Waldo count 
@@ -17,6 +17,25 @@ module top_tb();
 
 /* MULTIPLICATION */
   initial begin
+  	force pa1.rf1.core[0] = 0;
+  	force pa1.rf1.core[1] = 0;
+  	force pa1.rf1.core[2] = 0;
+ 	force pa1.rf1.core[3] = 0;
+  	force pa1.rf1.core[4] = 0;
+  	force pa1.rf1.core[5] = 0;
+  	force pa1.rf1.core[6] = 0;
+  	force pa1.rf1.core[7] = 0;
+  	force pa1.rf1.core[8] = 0;
+  	release pa1.rf1.core[0];
+  	release pa1.rf1.core[1];
+  	release pa1.rf1.core[2];
+  	release pa1.rf1.core[3];
+  	release pa1.rf1.core[4];
+  	release pa1.rf1.core[5];
+  	release pa1.rf1.core[6];
+  	release pa1.rf1.core[7];
+  	release pa1.rf1.core[8];
+  
     a               =  5;
 	b               = 15;
 	c               =  2;
@@ -30,9 +49,31 @@ module top_tb();
     $display(); 
 	$display(" %d*%d*%d",a,b,c);
 	p = a*b*c;
-	#10ns reset = 1;					// reset #1 -- PRODUCT
+	//#10ns reset = 1;					// reset #1 -- PRODUCT
+	$display("not our code has happened");
 	#20ns reset = 0;					// start program
-    wait(done);		
+	$display("our code kind of happened");
+    wait(done);
+    #5ns reset = 1;	
+    
+    force pa1.rf1.core[0] = 0;
+  	force pa1.rf1.core[1] = 0;
+  	force pa1.rf1.core[2] = 0;
+ 	force pa1.rf1.core[3] = 0;
+  	force pa1.rf1.core[4] = 0;
+  	force pa1.rf1.core[5] = 0;
+  	force pa1.rf1.core[6] = 0;
+  	force pa1.rf1.core[7] = 0;
+  	force pa1.rf1.core[8] = 0;
+  	release pa1.rf1.core[0];
+  	release pa1.rf1.core[1];
+  	release pa1.rf1.core[2];
+  	release pa1.rf1.core[3];
+  	release pa1.rf1.core[4];
+  	release pa1.rf1.core[5];
+  	release pa1.rf1.core[6];
+  	release pa1.rf1.core[7];
+  	release pa1.rf1.core[8];	
 
 // diagnostics: compare a*b*c against what the DUT computes 
     $display();
@@ -42,7 +83,6 @@ module top_tb();
 //    $displayh("prod=0x%h 0x%h",p,{pa1.dm1.guts[4],pa1.dm1.guts[5]});
 //    $display();
     $display("\n \n");
-
 
 
 /* STRING MATCH */
@@ -66,9 +106,29 @@ module top_tb();
 //           $display("bench",,,ct,,,i);     					(REMOVE THIS) 
 	     end
 	end	   :op_ld_loop
-    #10ns reset = 1;					// reset #2 -- STRING MATCH
+    //#10ns reset = 1;					// reset #2 -- STRING MATCH
 	#20ns reset = 0;					// start program
 	wait(done);
+	#5ns reset = 1;
+	
+	force pa1.rf1.core[0] = 0;
+  	force pa1.rf1.core[1] = 0;
+  	force pa1.rf1.core[2] = 0;
+ 	force pa1.rf1.core[3] = 0;
+  	force pa1.rf1.core[4] = 0;
+  	force pa1.rf1.core[5] = 0;
+  	force pa1.rf1.core[6] = 0;
+  	force pa1.rf1.core[7] = 0;
+  	force pa1.rf1.core[8] = 0;
+  	release pa1.rf1.core[0];
+  	release pa1.rf1.core[1];
+  	release pa1.rf1.core[2];
+  	release pa1.rf1.core[3];
+  	release pa1.rf1.core[4];
+  	release pa1.rf1.core[5];
+  	release pa1.rf1.core[6];
+  	release pa1.rf1.core[7];
+  	release pa1.rf1.core[8];
 
 // diagnostics: compare ct against what the DUT computes 
 	$display("math match count = %d; DUT count = %d", ct, pa1.dm1.guts[7]);
@@ -103,9 +163,10 @@ module top_tb();
 		end
 		// $display("bench",,,ct,,,i);      
 	  end
-	#10ns reset = 1;					// reset #3 -- CLOSEST PAIR
+	//#10ns reset = 1;					// reset #3 -- CLOSEST PAIR
     #20ns reset = 0;					// start program
 	wait(done);
+	#5ns reset = 1;
 
 // diagnostics: compare dist against what the DUT computes 
 	#20ns $display("math dist = %d, DUT dist = %d", dist2, pa1.dm1.guts[127]);
@@ -114,12 +175,13 @@ module top_tb();
 	$display("\n \n");
     #10ns;
 
-
+end
 
 // clk logic
   always begin
     #5ns clk = 1;
 	#5ns clk = 0;
   end
+
 
 endmodule
