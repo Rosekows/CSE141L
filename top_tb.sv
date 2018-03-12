@@ -37,9 +37,9 @@ module top_tb();
   	release pa1.rf1.core[7]; */
   	release pa1.rf1.core[8];
   
-    a               =  5;
-	b               = 15;
-	c               =  2;
+    a               =  2;
+	b               =  1;
+	c               =  3;
 	pa1.dm1.guts[1] =  a;           	// initialize DUT data memory
 	pa1.dm1.guts[2] =  b;		    
 	pa1.dm1.guts[3] =  c;	
@@ -53,7 +53,7 @@ module top_tb();
 	//#10ns reset = 1;					// reset #1 -- PRODUCT
 	$display("not our code has happened");
 	#20ns reset = 0;					// start program
-	$display("our code kind of happened");
+	$display("our code kind of happened");	
     wait(done);
     #5ns reset = 1;	
     

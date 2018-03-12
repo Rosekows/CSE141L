@@ -24,10 +24,18 @@ module dec(
   
 	  // R - type
 	  if (op < 7 || op == 11) begin
-	    rd = inst[14:10];
-	  	rt = inst[9:5];
-	  	rs = inst[4:0];
-	  	we_rf = 1;
+	    rd = inst[14:10]; // reg - dest
+	  	rt = inst[9:5];   // reg/const - in_b
+	  	rs = inst[4:0];   // reg - in_a
+	  	
+	  	// don't write enable if compare
+	  	if (op == 6) begin
+	  		we_rf = 0;
+	  	end
+	  	else begin
+	  		we_rf = 1;
+	  	end
+	  	
 	  	we_dmem = 0;
 	  end
 	  
@@ -54,10 +62,11 @@ module dec(
 	  	we_rf = 0;
 	  	we_dmem = 0;
 	  end
-	  
+	  /*
 	  $display("rd is %d", rd);
 	  $display("rs is %d", rs);
 	  $display("rt is %d", rt);
 	  $display("we_rf is %d\n", we_rf);
+	  */
    end
 endmodule

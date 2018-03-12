@@ -5,6 +5,19 @@ module imem(
   
    case(PC)
                                  // A * B * C
+/*  // ignore this i just wanted to try smthg out
+    0:    iptr = 'b000_011_011;		// mov r7, 15
+    1:    iptr = 'b000_001_110;    // add   r7, 1, r7
+    2:    iptr = 'b000_001_110;    // add   r7, 1, r7
+    2:    iptr = 'b000_010_101;		// cmp r7, 16
+    2:    iptr = 'b000_011_101;		// mov r1, 15
+    0:    iptr = 'b000_001_110;    // add   r7, 1, r7
+    0:    iptr = 9'b000_111_100; 		// add r7, 5, r7 (60)
+    1:    iptr = 9'b000_111_000; 		// add r2, 1, r2 (56)
+    2:    iptr = 9'b000_001_110;    // add   r7, 1, r7   (14)
+    3:    iptr = 9'b000_000_000;	// done 
+*/
+  
     0:  iptr = 'b000_000_001;    // ld r2, [1]
     1:  iptr = 'b000_000_010;    // ld r3, [2]   
     2:  iptr = 'b000_000_011;    // loop: and r6, 1, r3
@@ -18,7 +31,7 @@ module imem(
     10: iptr = 'b000_001_011;    // sll   r1, 1, r1 
     11: iptr = 'b000_001_100;    // add r1, r6, r1  
     12: iptr = 'b000_001_101;    // srl   r3, 1, r3 
-    13: iptr = 'b000_001_110;    // add   r7, 1, r7 
+    13: iptr = 'b000_001_110;    // add   r7, 1, r7
     14: iptr = 'b000_001_111;    // cmp   r7, 8     
     15: iptr = 'b000_010_000;    // bl  loop    
     16: iptr = 'b000_010_001;    // bg  lowerloop   
@@ -30,7 +43,7 @@ module imem(
     22: iptr = 'b000_010_111;    // st  [5], r5   
     23: iptr = 'b000_011_000;    // st  r4, [4]   
     24: iptr = 'b000_000_000;    // done
-
+    
                                  // string match
     25: iptr = 'b000_011_001;    // stringLoop: ld  r1, [32 + r3] 
     26: iptr = 'b000_011_010;    // ld  r2, 6 
@@ -72,7 +85,7 @@ module imem(
     60: iptr = 'b000_111_001;    // cmp  r2, 19
     61: iptr = 'b000_111_010;    // bl   outer
     62: iptr = 'b000_111_011;    // st   r1, [127]
-    63: iptr = 'b000_000_000;    // done
+    63: iptr = 'b000_000_000;    // done 
 
     endcase
   end

@@ -40,6 +40,6 @@ module pc (
     end
     else begin
 	    PC <= PC + 'b1;
-      $display("pc = %d", PC);
+      //$display("pc = %d", PC);
     end
 endmodule
