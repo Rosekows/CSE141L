@@ -11,7 +11,7 @@ module pc (
 
   logic[1:0] state = 3;     // state 0 = PRODUCT, 1 = STRING MATCH, 2 = CLOSEST PAIR
 
-  assign brel = op==BA || (lt && op==BL) || (!lt && op==BG) || (z && op==BE);
+  assign brel = op==BA || (lt && op==BL) || (!lt && !z && op==BG) || (z && op==BE);
   
   always @(posedge reset) begin
     if (state >= 2) state = 0; //changed from 1 to 0, should start at 0 if state is initialized to 3?? (could use 2?)
@@ -36,7 +36,7 @@ module pc (
     end
     else if (brel)begin
 	    PC <= PC + bamt;
-      $display("branched, pc = %d", PC);
+      //$display("branched, pc = %d", PC);
     end
     else begin
 	    PC <= PC + 'b1;

@@ -50,7 +50,7 @@ module dec(
 	  
 	  // I - type: store
 	  else if (op == 13) begin
-	  	rd = inst[14:10]; 
+	  	rd = inst[14:10];  
 	  	rt = inst[9:5]; // used to be rs
 	  	we_rf = 0;
 	  	we_dmem = 1;

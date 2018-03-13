@@ -7,7 +7,8 @@ module alu (
   output logic[7:0] rslt,
   output logic      co,
   output logic      lt,       // for cmp, 1 if in_a is < in_b, 0 if in_a > in_b
-  output logic      z);
+  output logic      z
+  );
 
   always_comb begin
     case(op)
@@ -18,8 +19,6 @@ module alu (
     kSLL: rslt = in_a << 1;
     kSRL: rslt = in_a >> 1;
     kCMP: {z, lt} = {in_a == in_b, in_a < in_b}; //$display("compare, in_a is %d, in_b is %d", in_a, in_b);
-    //kCMP: z = in_a == in_b,
-    // 		 lt = in_a < in_b;
     kBE:  rslt = in_b;        // branching doesn't use ALU
     kBL:  rslt = in_b;        // branching doesn't use ALU
     kBG:  rslt = in_b;        // branching doesn't use ALU

@@ -29,6 +29,20 @@ module top(
   assign  op = inst[19:15];
   assign  done = iptr==9'b000_000_000;
   
+  /*if (reset) begin
+   	  assign dm_out = 0;
+   	  assign rf_di = 0;
+   	  assign store_val = 0;
+   	  assign ptr_b = 0;
+   	  assign ptr_a = 0;
+   	  assign rt = 0;
+   	  assign co = 0;
+   	  assign lt = 0;
+   	  assign we_rf = 0;
+   	  assign we_dmem = 0;
+   	  assign const_flag = 0;
+   end */
+  
   alu alu1(
 	 .op(op), 
 	 .in_a(in_a),
@@ -64,11 +78,12 @@ module top(
 	 .ptr_w(ptr_w),
 	 .ptr_a(ptr_a),
 	 .ptr_b(ptr_b),
-   .r_overflow(co),
+     .r_overflow(co),
    .const_flag(const_flag),
+   .reset(reset),
 	 .do_a(in_a),
 	 .do_b(in_b),
-   .store_value(store_val)
+     .store_value(store_val)
   );
 
   dmem dm1(

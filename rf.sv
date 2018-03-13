@@ -7,41 +7,51 @@ module rf(
 	input[7:0] 		  ptr_b,
   input       r_overflow,
   input				const_flag,
+  input				reset,
   
   output logic[7:0] do_a,
                     do_b,
-                    store_value);
+                    store_value
+  );
 
-  logic  [7:0] core[9];
+  logic [7:0] core[9];
   
-  //always_ff @(posedge clk) begin
   always_comb begin
     if (ptr_a == 0)           // if one of the pointers == 0, always output 0
       assign do_a = 0;
     else begin
       assign do_a = core[ptr_a];
-      //if (ptr_a == 7) begin
-      //	$display("reading regfile-- ptr_a: %d, do_a: %d, core[7]: %d", ptr_a, do_a, core[7]); 
-      //end
-    end   
+    end 
+      
     if (const_flag)           // if b is a constant, pass value through 
       assign do_b = ptr_b;
     else if (ptr_b == 0)
       assign do_b = 0;
     else
       assign do_b = core[ptr_b[4:0]];    
-   end 
+   end
    
-    //if (we) begin   //always_ff @(posedge clk) if(we) <- we think this is wrong
-    always_ff @ (posedge clk)
+   
+   assign store_value = core[ptr_w];
+   
+   /*
+   if (reset) begin
+   	  // reset core
+   	  assign core[0] = 0;
+   	  assign core[1] = 0;
+   	  assign core[2] = 0;
+   	  assign core[3] = 0;
+   	  assign core[4] = 0;
+   	  assign core[5] = 0;
+   	  assign core[6] = 0;
+   	  assign core[7] = 0;
+   	  assign core[8] = 0;
+   end*/
+    
+   always_ff @ (posedge clk) begin
+  	 core[8] <= r_overflow;
   	 if (we) begin 
-      core[ptr_w] <= di;       // CHANGED FROM <=
-      //$display("writing %d to %d in rf", di, ptr_w);
-      store_value <= core[ptr_w];
-      core[8] <= r_overflow;
+      core[ptr_w] <= di; 
 	 end
-	 else begin
-    	store_value <= core[ptr_w];
-        core[8] <= r_overflow;
-	 end
+	end
 endmodule
