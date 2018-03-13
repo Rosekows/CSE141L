@@ -1,3 +1,5 @@
+import random
+
 r0 = 0
 r1 = 0
 r2 = 0
@@ -50,6 +52,9 @@ r6 = 0
 r7 = 0
 rO = 0
 
+string_array = random.sample(range(1, 512), 64)
+
+while r3 < 64:
 
 
 
