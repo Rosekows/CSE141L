@@ -27,11 +27,11 @@ module pc (
       //$display("program 1");                     // START OF PRODUCT
    	end
     else if (reset && state == 1) begin
-      PC <= 25;                     // START OF STRING MATCH
+      PC <= 28;                     // START OF STRING MATCH
       //$display("program 2");
     end
     else if (reset)begin
-      PC <= 44;                     // START OF CLOSEST PAIR
+      PC <= 48;                     // START OF CLOSEST PAIR
       //$display("program 3");
     end
     else if (brel)begin

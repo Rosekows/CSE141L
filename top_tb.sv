@@ -38,9 +38,9 @@ module top_tb();
   	release pa1.rf1.core[7]; 
   	release pa1.rf1.core[8];*/
   
-    a               =  94;
-	b               = 6;
-	c               = 7;
+    a               =  10;
+	b               = 36;
+	c               = 3;
 	pa1.dm1.guts[1] =  a;           	// initialize DUT data memory
 	pa1.dm1.guts[2] =  b;		    
 	pa1.dm1.guts[3] =  c;	
@@ -66,8 +66,7 @@ module top_tb();
   	pa1.rf1.core[5] = 0;
   	pa1.rf1.core[6] = 0;
   	pa1.rf1.core[7] = 0;
-  	pa1.rf1.core[8] = 0;
-  	//release pa1.rf1.core[8];	
+  	pa1.rf1.core[8] = 0;	
 
 // diagnostics: compare a*b*c against what the DUT computes 
     $display();
@@ -88,7 +87,8 @@ module top_tb();
     $display();
 	dat_ram[6] = pa1.dm1.guts[6];
 	for(int i=32; i<96; i++) begin  :op_ld_loop
-	  pa1.dm1.guts[i] = $random;
+	  //pa1.dm1.guts[i] = $random;
+	  pa1.dm1.guts[i] = i;
 	  dat_ram[i] = pa1.dm1.guts[i];
       if(dat_ram[i][3:0]==dat_ram[6] ||
          dat_ram[i][4:1]==dat_ram[6] ||
@@ -114,15 +114,12 @@ module top_tb();
   	pa1.rf1.core[6] = 0;
   	pa1.rf1.core[7] = 0;
   	pa1.rf1.core[8] = 0;
-  	//release pa1.rf1.core[8];
 
 // diagnostics: compare ct against what the DUT computes 
 	$display("math match count = %d; DUT count = %d", ct, pa1.dm1.guts[7]);
 	if(ct==pa1.dm1.guts[7]) $display("program 2 success");
 	else $display("program 2 failure");
     $display("\n \n");
-
-
 
 /* CLOSEST PAIR */
     $display("program 3 -- minimum pair distance");

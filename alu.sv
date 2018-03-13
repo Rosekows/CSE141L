@@ -16,8 +16,8 @@ module alu (
     kSUB: rslt = in_a - in_b;
     kAND: rslt = in_a & in_b;
     kXOR: rslt = in_a ^ in_b;
-    kSLL: rslt = in_a << 1;
-    kSRL: rslt = in_a >> 1;
+    kSLL: rslt = in_a << 1;	// could change to in_b
+    kSRL: rslt = in_a >> in_b;
     kCMP: {z, lt} = {in_a == in_b, in_a < in_b}; //$display("compare, in_a is %d, in_b is %d", in_a, in_b);
     kBE:  rslt = in_b;        // branching doesn't use ALU
     kBL:  rslt = in_b;        // branching doesn't use ALU
@@ -29,15 +29,6 @@ module alu (
     default: $display("hitting default case!");
 	 endcase
 	 
-	/*
-	if (op == kCMP) begin
-		$display("compare, in_a is %d, in_b is %d", in_a, in_b);
-	end
-	if (op == kADD && in_b == 1) begin
-		$display("looping compare: counter is %d", in_a);
-	end
-	$display("alu bullshit %d", rslt);
-	*/
   end
 
 endmodule

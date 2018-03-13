@@ -19,7 +19,8 @@ module lut_const(
       5'b11011: constant = 8'b0100_0000; // 64
       5'b11100: constant = 8'b0000_0111; // 7
       5'b11101: constant = 8'b1111_1111; // 255
-      5'b11110: constant = 8'b0001_0011; // 19
+      //5'b11110: constant = 8'b0001_0011; // 19
+      5'b11110: constant = 8'b0001_0000; // 16
       5'b11111: constant = 8'b0001_0100; // 20  
     endcase
     if (ptr < 5'b10000) begin            // if ptr doesn't start with 1 pass it through
