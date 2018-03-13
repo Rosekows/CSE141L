@@ -25,7 +25,8 @@ module top_tb();
   	pa1.rf1.core[5] = 0;
   	pa1.rf1.core[6] = 0;
   	pa1.rf1.core[7] = 0;
-  	force pa1.rf1.core[8] = 0;
+  	pa1.rf1.core[8] = 0;
+  	//force pa1.rf1.core[8] = 0;
   	
   	/*release pa1.rf1.core[0];
   	release pa1.rf1.core[1];
@@ -34,12 +35,12 @@ module top_tb();
   	release pa1.rf1.core[4];
   	release pa1.rf1.core[5];
   	release pa1.rf1.core[6];
-  	release pa1.rf1.core[7]; */
-  	release pa1.rf1.core[8];
+  	release pa1.rf1.core[7]; 
+  	release pa1.rf1.core[8];*/
   
-    a               =  4;
-	b               =  16;
-	c               =  27;
+    a               =  94;
+	b               = 6;
+	c               = 7;
 	pa1.dm1.guts[1] =  a;           	// initialize DUT data memory
 	pa1.dm1.guts[2] =  b;		    
 	pa1.dm1.guts[3] =  c;	
@@ -65,8 +66,8 @@ module top_tb();
   	pa1.rf1.core[5] = 0;
   	pa1.rf1.core[6] = 0;
   	pa1.rf1.core[7] = 0;
-  	force pa1.rf1.core[8] = 0;
-  	release pa1.rf1.core[8];	
+  	pa1.rf1.core[8] = 0;
+  	//release pa1.rf1.core[8];	
 
 // diagnostics: compare a*b*c against what the DUT computes 
     $display();
@@ -112,8 +113,8 @@ module top_tb();
   	pa1.rf1.core[5] = 0;
   	pa1.rf1.core[6] = 0;
   	pa1.rf1.core[7] = 0;
-  	force pa1.rf1.core[8] = 0;
-  	release pa1.rf1.core[8];
+  	pa1.rf1.core[8] = 0;
+  	//release pa1.rf1.core[8];
 
 // diagnostics: compare ct against what the DUT computes 
 	$display("math match count = %d; DUT count = %d", ct, pa1.dm1.guts[7]);
