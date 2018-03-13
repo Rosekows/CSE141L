@@ -34,19 +34,6 @@ module rf(
    
    assign store_value = core[ptr_w];
    
-   /*
-   if (reset) begin
-   	  // reset core
-   	  assign core[0] = 0;
-   	  assign core[1] = 0;
-   	  assign core[2] = 0;
-   	  assign core[3] = 0;
-   	  assign core[4] = 0;
-   	  assign core[5] = 0;
-   	  assign core[6] = 0;
-   	  assign core[7] = 0;
-   	  assign core[8] = 0;
-   end*/
     
    always_ff @ (posedge clk) begin
   	 core[8] <= r_overflow;

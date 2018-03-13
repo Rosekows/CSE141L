@@ -18,7 +18,7 @@ module alu (
     kXOR: rslt = in_a ^ in_b;
     kSLL: rslt = in_a << 1;	// could change to in_b
     kSRL: rslt = in_a >> in_b;
-    kCMP: {z, lt} = {in_a == in_b, in_a < in_b}; //$display("compare, in_a is %d, in_b is %d", in_a, in_b);
+    kCMP: {z, lt} = {in_a == in_b, in_a < in_b}; 
     kBE:  rslt = in_b;        // branching doesn't use ALU
     kBL:  rslt = in_b;        // branching doesn't use ALU
     kBG:  rslt = in_b;        // branching doesn't use ALU
@@ -26,7 +26,6 @@ module alu (
     kMOV: rslt = in_b;        // moving doesn't use ALU (NEEDS TO BE IN_B)
     kLD:  rslt = in_a + in_b; // calculate the load address
     kST:  rslt = in_b;        // store doesn't use ALU
-    default: $display("hitting default case!");
 	 endcase
 	 
   end

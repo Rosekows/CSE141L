@@ -4,7 +4,7 @@ module imem(
   always_comb begin
   
    case(PC)
-                                 // A * B * C
+                                 // PRODUCT
     0:  iptr = 'b000_000_001;    // ld r2, [1]
     1:  iptr = 'b000_000_010;    // ld r3, [2]   
     2:  iptr = 'b000_000_011;    // loop: and r6, 1, r3
@@ -28,8 +28,8 @@ module imem(
     19: iptr = 'b000_010_011;    // mov r2, r5    
     20: iptr = 'b000_010_100;    // mov   r1, r4  
     
-    21: iptr = 'b000_111_100;	// mov r5, r0
-    22: iptr = 'b000_111_101;	// mov r4, r0
+    21: iptr = 'b000_111_100;	 // mov r5, r0
+    22: iptr = 'b000_111_101;	 // mov r4, r0
     
     23: iptr = 'b000_010_101;    // lowerloop:  cmp r7, 16      
     24: iptr = 'b000_010_110;    // bl  loop   
@@ -38,12 +38,12 @@ module imem(
     27: iptr = 'b000_000_000;    // done
     
     
-    	                           // string match
+    	                         // STRING MATCH
     28: iptr = 'b000_011_001;    // stringLoop: ld  r1, [32 + r3] 
     29: iptr = 'b000_011_010;    // ld  r2, 6 
     30: iptr = 'b000_011_011;    // mov r7, 15   
     
-    31: iptr = 'b000_111_101;	// mov r4, 0
+    31: iptr = 'b000_111_101;	 // mov r4, 0
     
     32: iptr = 'b000_011_100;    // matchLoop: and r6, r7, r1  
     33: iptr = 'b000_011_101;    // xor r6, r2, r6
@@ -62,30 +62,32 @@ module imem(
     46: iptr = 'b000_101_001;    // st  r5, [7]   
     47: iptr = 'b000_000_000;    // done
 
-/*
-                                 // closest pair
-    45: iptr = 'b000_101_010;    // mov     r1, 255
-    46: iptr = 'b000_101_011;    // outer: ld   r4, [128+r2]   
-    47: iptr = 'b000_101_100;    // add  r3, r2, 1  
-    48: iptr = 'b000_101_101;    // inner: ld   r5, [128 + r3]
-    49: iptr = 'b000_101_110;    // cmp  r4, r5 
-    50: iptr = 'b000_101_111;    // bg   ijSub 
-    51: iptr = 'b000_110_000;    // sub  r5, r5, r4
-    52: iptr = 'b000_110_001;    // ba   compDist
-    53: iptr = 'b000_110_010;    // ijSub: sub r5, r4, r5
-    54: iptr = 'b000_110_011;    // compDist: cmp r1, r5
-    55: iptr = 'b000_110_100;    // bl   incJ  
-    56: iptr = 'b000_110_101;    // mov  r1, r5
-    57: iptr = 'b000_100_110;    // incJ: add     r3, 1, r3 
-    58: iptr = 'b000_110_110;    // cmp  r3, 20
-    59: iptr = 'b000_110_111;    // bl   inner
-    60: iptr = 'b000_111_000;    // add  r2, 1, r2
-    61: iptr = 'b000_111_001;    // cmp  r2, 19
-    62: iptr = 'b000_111_010;    // bl   outer
-    63: iptr = 'b000_111_011;    // st   r1, [127]
-    64: iptr = 'b000_000_000;    // done 
+                                 // CLOSEST PAIR
+    48: iptr = 'b000_101_010;    // mov     r1, 255
+    49: iptr = 'b000_101_100;	 // mov		r2, 1
+    
+    50: iptr = 'b000_101_011;    // outer: ld   r4, [128+r2]   
+   
+    51: iptr = 'b000_111_111; 	 // mov r3, 0
+    
+    52: iptr = 'b000_101_101;    // inner: ld   r5, [128 + r3]
+    53: iptr = 'b000_101_110;    // cmp  r4, r5 
+    54: iptr = 'b000_101_111;    // bg   ijSub 
+    55: iptr = 'b000_110_000;    // sub  r5, r5, r4
+    56: iptr = 'b000_110_001;    // ba   compDist
+    57: iptr = 'b000_110_010;    // ijSub: sub r5, r4, r5
+    58: iptr = 'b000_110_011;    // compDist: cmp r1, r5
+    59: iptr = 'b000_110_100;    // bl   incJ  
+    60: iptr = 'b000_110_101;    // mov  r1, r5
+    61: iptr = 'b000_100_110;    // incJ: add     r3, 1, r3 
+    62: iptr = 'b000_110_110;    // cmp  r3, r2
+    63: iptr = 'b000_110_111;    // bl   inner
+    64: iptr = 'b000_111_000;    // add  r2, 1, r2
+    65: iptr = 'b000_111_001;    // cmp  r2, 20
+    66: iptr = 'b000_111_010;    // bl   outer
+    67: iptr = 'b000_111_011;    // st   r1, [127]
+    68: iptr = 'b000_000_000;    // done 
 
-*/
     endcase
   end
 endmodule

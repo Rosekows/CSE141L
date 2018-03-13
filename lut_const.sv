@@ -3,7 +3,7 @@ module lut_const(
   output logic[7:0] constant,
   output logic const_flag);
 
-  always_comb begin            // TODO: not sure about syntax
+  always_comb begin            
 	 case(ptr)
       5'b10000: constant = 8'b0111_1111; // 127
       5'b10001: constant = 8'b0000_0001; // 1
@@ -19,7 +19,6 @@ module lut_const(
       5'b11011: constant = 8'b0100_0000; // 64
       5'b11100: constant = 8'b0000_0111; // 7
       5'b11101: constant = 8'b1111_1111; // 255
-      //5'b11110: constant = 8'b0001_0011; // 19
       5'b11110: constant = 8'b0001_0000; // 16
       5'b11111: constant = 8'b0001_0100; // 20  
     endcase

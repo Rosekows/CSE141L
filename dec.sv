@@ -15,12 +15,6 @@ module dec(
  );
 
   always_comb begin
-      // rs = 5'b0;
-	  // rd = 5'b0;
-	  // rt = 5'b0;
-	  // bamt = 15'b0;
-	  // we_rf = 1'b0;
-	  // we_dmem = 1'b0;
   
 	  // R - type
 	  if (op < 7 || op == 11) begin
@@ -62,11 +56,5 @@ module dec(
 	  	we_rf = 0;
 	  	we_dmem = 0;
 	  end
-	  /*
-	  $display("rd is %d", rd);
-	  $display("rs is %d", rs);
-	  $display("rt is %d", rt);
-	  $display("we_rf is %d\n", we_rf);
-	  */
    end
 endmodule
